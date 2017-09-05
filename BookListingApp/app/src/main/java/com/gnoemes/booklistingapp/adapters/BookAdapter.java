@@ -16,9 +16,12 @@ import java.util.List;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder>{
 
     private List<Book> books;
+    private final OnItemClickListener listener;
 
-    public BookAdapter(List<Book> books) {
+
+    public BookAdapter(List<Book> books, final OnItemClickListener listener) {
         this.books = books;
+        this.listener = listener;
     }
 
     @Override
@@ -29,6 +32,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
+        holder.click(books.get(position), listener);
         holder.title.setText(books.get(position).getTitle());
         holder.author.setText(books.get(position).getAuthorsString());
         holder.description.setText(books.get(position).getDescription());
@@ -47,7 +51,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         return books.size();
     }
 
-    public class BookViewHolder extends RecyclerView.ViewHolder{
+    public class BookViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
         private TextView title;
@@ -62,5 +66,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             author = (TextView) itemView.findViewById(R.id.author);
             description = (TextView) itemView.findViewById(R.id.description);
         }
+
+        public void click(final Book book, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onClick(book);
+                }
+            });
+        }
+
+    }
+    public interface OnItemClickListener {
+        void onClick(Book item);
     }
 }

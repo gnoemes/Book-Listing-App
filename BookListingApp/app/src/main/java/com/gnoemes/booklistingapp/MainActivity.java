@@ -1,10 +1,13 @@
 package com.gnoemes.booklistingapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,21 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private BookAdapter adapter;
     private RecyclerView list;
     private static final String DEFAULT_URL = "https://www.googleapis.com/books/v1/volumes?q=android";
-    public static final String mockJSON = "{\n" +
-            "\t\"items\": [{\n" +
-            "\t\t\"volumeInfo\": {\n" +
-            "\t\t\t\"title\": \"Android in The Attic\",\n" +
-            "\t\t\t\"authors\": [\n" +
-            "\t\t\t\t\"Nicholas Allan\"\n" +
-            "\t\t\t],\n" +
-            "\t\t\t\"description\": \"Aunt Edna has created a no-nonsense nanny android to make sure Billy and Alfie don't have any fun. But then Alfie discovers how to override Auntie Anne-Droid's programming and nothing can stop them eating all the Cheeki Choko Cherry Cakes they like ... until the real aunt Edna is kidnapped!\",\n" +
-            "\t\t\t\"imageLinks\": {\n" +
-            "\t\t\t\t\"smallThumbnail\": \"http://books.google.com/books/content?id=MoXpe6H2B5gC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api\"\n" +
-            "\t\t\t},\n" +
-            "\t\t\t\"infoLink\": \"https://play.google.com/store/books/details?id=MoXpe6H2B5gC&source=gbs_api\"\n" +
-            "\t\t}\n" +
-            "\t}]\n" +
-            "}";
 
 
     @Override
@@ -58,17 +46,25 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected List<Book> doInBackground(String... url) {
-            if (url == null || url.length == 0)
-            {
+            if (url == null || url.length == 0) {
                 return null;
             }
             return Utils.createJSONFromURL(url[0]);
         }
 
         @Override
-        protected void onPostExecute(List<Book> books) {
-            adapter = new BookAdapter(books);
+        protected void onPostExecute(final List<Book> books) {
+
+            adapter = new BookAdapter(books, new BookAdapter.OnItemClickListener() {
+                @Override
+                public void onClick(Book item) {
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
+//                    startActivity(intent);
+                }
+            });
             list.setAdapter(adapter);
+
         }
+
     }
 }
