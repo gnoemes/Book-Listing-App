@@ -18,16 +18,17 @@
 
         <ImageView
             android:id="@+id/image_book"
-            android:layout_width="106dp"
-            android:layout_height="166dp"
-            android:scaleType="fitStart"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
             tools:src="@drawable/content" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -38,7 +39,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@android:color/black"
-                android:textSize="24sp"
+                android:textSize="16sp"
                 tools:text="Android in The Attic" />
 
             <TextView

@@ -1,19 +1,19 @@
 package com.gnoemes.booklistingapp.models;
 
-import android.media.Image;
-
 public class Book {
 
     private String title;
-    private String author;
-    private String desc;
-    private String img;
+    private String[] authors;
+    private String description;
+    private String imageURL;
+    private String url;
 
-    public Book(String title, String author, String desc, String img) {
+    public Book(String title, String[] authors, String description, String imageURL, String url) {
         this.title = title;
-        this.author = author;
-        this.desc = desc;
-        this.img = img;
+        this.authors = authors;
+        this.description = description;
+        this.imageURL = imageURL;
+        this.url = url;
     }
 
     public String getTitle() {
@@ -24,27 +24,49 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public String[] getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(String[] authors) {
+        this.authors = authors;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getImg() {
-        return img;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getAuthorsString() {
+        if (authors.length == 1) {
+            return authors[0];
+        }
+        StringBuilder builder = new StringBuilder();
+
+        for (String s:authors) {
+            builder.append(s).append(", ");
+        }
+        builder.replace(builder.length()-3,builder.length()-1,"");
+        return builder.toString();
+    }
+
 }
