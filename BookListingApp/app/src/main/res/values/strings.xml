@@ -1,4 +1,6 @@
 <resources>
-    <string name="app_name">BookListingApp</string>
+    <string name="app_name">Book Observer</string>
     <string name="test_string">Aunt Edna has created a no-nonsense nanny android to make sure Billy and Alfie don\'t have any fun. But then Alfie discovers how to override Auntie Anne-Droid\'s programming and nothing can stop them eating all the Cheeki Choko Cherry Cakes they like ... until the real aunt Edna is kidnapped!</string>
+    <string name="navigation_drawer_open">Open drawer</string>
+    <string name="navigation_drawer_close">Close drawer</string>
 </resources>
