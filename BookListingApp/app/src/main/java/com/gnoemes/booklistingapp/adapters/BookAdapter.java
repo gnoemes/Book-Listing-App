@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gnoemes.booklistingapp.R;
+import com.gnoemes.booklistingapp.Utils;
 import com.gnoemes.booklistingapp.models.Book;
 import com.squareup.picasso.Picasso;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder>{
 
+    private static final String NO_IMAGE = "https://www.justpro.co/img/no-image.png";
     private List<Book> books;
     private final OnItemClickListener listener;
 
@@ -36,6 +38,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.title.setText(books.get(position).getTitle());
         holder.author.setText(books.get(position).getAuthorsString());
         holder.description.setText(books.get(position).getDescription());
+        if (books.get(position).getImageURL().equals(Utils.ERR_MESSAGE)) {
+            books.get(position).setUrl(NO_IMAGE);
+        }
         Picasso.with(holder.imageView.getContext())
                 .load(books.get(position).getImageURL())
                 .into(holder.imageView);

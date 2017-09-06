@@ -1,31 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:title="Import" />
+            android:id="@+id/nav_new"
+            android:title="@string/msg_new_books"
+            android:icon="@mipmap/ic_new_box"/>
         <item
-            android:id="@+id/nav_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-
-            android:title="Tools" />
+            android:id="@+id/nav_top"
+            android:title="@string/msg_top_books"
+            android:icon="@mipmap/ic_star_outline"/>
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:title="Send" />
-        </menu>
-    </item>
+        <item
+            android:id="@+id/nav_genres"
+            android:title="@string/msg_genres">
+    <menu>
+        <item
+            android:id="@+id/nav_history"
+            android:title="@string/msg_history"
+            android:icon="@mipmap/ic_book_open_page_variant"/>
+        <item
+            android:id="@+id/nav_psychology"
+            android:title="@string/msg_psychology"
+            android:icon="@mipmap/ic_human_male_female"/>
+        <item
+            android:id="@+id/nav_medicine"
+            android:title="@string/msg_medicine"
+            android:icon="@mipmap/ic_hospital"/>
+
+        <item
+            android:id="@+id/nav_education"
+            android:title="@string/msg_education"
+            android:icon="@mipmap/ic_school"/>
+
+        <item
+            android:id="@+id/nav_computer_science"
+            android:title="@string/msg_computer_technologies"
+            android:icon="@mipmap/ic_desktop_mac"/>
+
+        <item
+            android:id="@+id/nav_science"
+            android:title="@string/msg_science"
+            android:icon="@mipmap/ic_flask_outline"/>
+
+        <item
+            android:id="@+id/nav_art"
+            android:title="@string/msg_art"
+            android:icon="@mipmap/ic_creation"/>
+
+    </menu>
+        </item>
+
 
 </menu>

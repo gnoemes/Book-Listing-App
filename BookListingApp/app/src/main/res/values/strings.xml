@@ -3,4 +3,14 @@
     <string name="test_string">Aunt Edna has created a no-nonsense nanny android to make sure Billy and Alfie don\'t have any fun. But then Alfie discovers how to override Auntie Anne-Droid\'s programming and nothing can stop them eating all the Cheeki Choko Cherry Cakes they like ... until the real aunt Edna is kidnapped!</string>
     <string name="navigation_drawer_open">Open drawer</string>
     <string name="navigation_drawer_close">Close drawer</string>
+    <string name="msg_new_books">New books</string>
+    <string name="msg_top_books">Top books</string>
+    <string name="msg_genres">Genres:</string>
+    <string name="msg_history">History</string>
+    <string name="msg_psychology">Psychology</string>
+    <string name="msg_education">Education</string>
+    <string name="msg_medicine">Medicine</string>
+    <string name="msg_art">Art</string>
+    <string name="msg_science">Science</string>
+    <string name="msg_computer_technologies">Computer technologies</string>
 </resources>

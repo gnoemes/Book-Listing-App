@@ -1,7 +1,5 @@
 package com.gnoemes.booklistingapp;
 
-import android.support.annotation.Nullable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +14,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class Utils {
+    public static final String ERR_MESSAGE = "No description";
 
     public static List<Book> createJSONFromURL(String url) {
         List<Book> books;
@@ -63,30 +62,40 @@ public class Utils {
             JsonNode volumeInfo = obj.get("volumeInfo");
             JsonNode titleNode = volumeInfo.get("title");
             JsonNode authorNode = volumeInfo.get("authors");
-            String[] authors = new String[authorNode.size()];
-            for (int j = 0; j < authorNode.size(); j++) {
-                authors[j] = authorNode.get(j).asText();
+            String[] authors = null;
+            if (authorNode != null) {
+                authors = new String[authorNode.size()];
+                for (int j = 0; j < authorNode.size(); j++) {
+                    authors[j] = authorNode.get(j).asText();
+                }
             }
+
             JsonNode descriptionNode = volumeInfo.get("description");
             JsonNode imageLinksNode = volumeInfo.get("imageLinks");
-            JsonNode imageNode = imageLinksNode.get("thumbnail");
+            JsonNode imageNode = null;
+            if (imageLinksNode != null) {
+                 imageNode = imageLinksNode.get("smallThumbnail");
+            }
             JsonNode infoLink = volumeInfo.get("infoLink");
 
-            String errMessage = "No description :(";
+
 
             String title;
             String description;
             String imageURL;
             String url;
 
-            if (titleNode == null) title = errMessage;
+            if (titleNode == null) title = ERR_MESSAGE;
             else title = titleNode.asText();
-            if (descriptionNode == null) description = errMessage;
+            if (descriptionNode == null) description = ERR_MESSAGE;
             else description = descriptionNode.asText();
-            if (authors.length == 0) authors[0] = errMessage;
-            if (imageNode == null) imageURL = errMessage;
+            if (authors == null || authors.length == 0) {
+                authors = new String[1];
+                authors[0] = ERR_MESSAGE;
+            }
+            if (imageNode == null) imageURL = ERR_MESSAGE;
             else imageURL = imageNode.asText();
-            if (infoLink == null) url = errMessage;
+            if (infoLink == null) url = ERR_MESSAGE;
             else url = infoLink.asText();
 
 
