@@ -2,14 +2,12 @@ package com.gnoemes.booklistingapp;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -21,12 +19,18 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.arellomobile.mvp.MvpAppCompatActivity;
+import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.gnoemes.booklistingapp.adapters.BookAdapter;
 import com.gnoemes.booklistingapp.models.Book;
+import com.gnoemes.booklistingapp.models.MainPresenter;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MvpAppCompatActivity implements com.gnoemes.booklistingapp.View{
+
+    @InjectPresenter
+    MainPresenter presenter;
 
     private SearchView searchView;
     private BookAdapter adapter;
@@ -73,39 +77,39 @@ public class MainActivity extends AppCompatActivity {
                 switch (id) {
                     case R.id.nav_new:
                         request = "book" + ORDER_BY_NEWEST;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_top:
                         request = "book" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_history:
                         request = "history" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_psychology:
                         request = "psychology" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_medicine:
                         request = "medicine" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_education:
                         request = "education" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_computer_science:
                         request = "computer" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_science:
                         request = "science" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
                     case R.id.nav_art:
                         request = "art" + ORDER_BY_RELEVANCE;
-                        new BookAsyncTask().execute(DEFAULT_URL + request);
+                        presenter.loadBooks(DEFAULT_URL + request);
                         break;
 
                 }
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 request = query + ORDER_BY_RELEVANCE;
-                new BookAsyncTask().execute(DEFAULT_URL + request);
+                presenter.loadBooks(DEFAULT_URL + request);
                 actionMenuItem.collapseActionView();
                 return false;
             }
@@ -153,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.nav_new) {
             request = "news";
-            new BookAsyncTask().execute(DEFAULT_URL + request);
+            presenter.loadBooks(DEFAULT_URL + request);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -164,39 +168,30 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 
-
-
-    private class BookAsyncTask extends AsyncTask<String,Void,List<Book>> {
-
-        @Override
-        protected List<Book> doInBackground(String... url) {
-            if (url == null || url.length == 0) {
-                return null;
-            }
-            return Utils.createJSONFromURL(url[0]);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            list.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-            nothing.setVisibility(View.GONE);
-        }
-
-        @Override
-        protected void onPostExecute(final List<Book> books) {
-
-            adapter = new BookAdapter(books, new BookAdapter.OnItemClickListener() {
-                @Override
-                public void onClick(Book item) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
-                    startActivity(intent);
-                }
-            });
-            list.setAdapter(adapter);
-            list.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.GONE);
-        }
+    @Override
+    public void showProgress() {
+        list.setVisibility(android.view.View.GONE);
+        progressBar.setVisibility(android.view.View.VISIBLE);
+        nothing.setVisibility(android.view.View.GONE);
     }
+
+    @Override
+    public void hideProgress() {
+
+        list.setVisibility(android.view.View.VISIBLE);
+        progressBar.setVisibility(android.view.View.GONE);
+    }
+
+    @Override
+    public void updateBooks(List<Book> books) {
+        adapter = new BookAdapter(books, new BookAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(Book item) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
+                startActivity(intent);
+            }
+        });
+        list.setAdapter(adapter);
+    }
+
 }
